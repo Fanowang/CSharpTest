@@ -25,9 +25,75 @@ namespace CSharpTest
             //b2.Name = "tt";
             //Console.WriteLine(string.Format("Bunny name is {0}, LikeCarrots is {1}, LikeHuman is {2}", b1.Name, b1.LikeCarrots, b1.LikeHumans));
             Console.WriteLine(string.Format("Bunny name is {0}, LikeCarrots is {1}, LikeHuman is {2}", b2.Name, b2.LikeCarrots, b2.LikeHumans));
+
+            Bus bus1 = new Bus(71);
+            Bus bus2 = new Bus(72);
+            bus1.Drive();
+            System.Threading.Thread.Sleep(300);
+            bus2.Drive();
+            Bus bus3 = new Bus(73);
+            System.Threading.Thread.Sleep(500);
+            bus3.Drive();
+
+            Stock msft = new Stock("newstock");
+            House mansion = new House("mansion");
+
+            Display(msft);
+            Display(mansion);
+        }
+
+        public static void Display(Asset asset)
+        {
+            Console.WriteLine(asset.Name);
         }
     }
 
+    public class Asset
+    {
+        public string Name;
+    }
+    public class Stock : Asset
+    {
+        public Stock(string name)
+        {
+            Name = name;
+        }
+    }
+    public class House : Asset
+    {
+        public House(string name)
+        {
+            Name = name;
+        }
+
+    }
+    public class Bus
+    {
+        protected static readonly DateTime globalStartTime;
+        protected int RouteNumber { get; set; }
+        static Bus()
+        {
+            globalStartTime = DateTime.Now;
+            Console.WriteLine("Global Start Time is assigned: {0}", globalStartTime);
+        }
+
+        public Bus(int routeNum)
+        {
+            RouteNumber = routeNum;
+            Console.WriteLine("Bus #{0} is created", routeNum);
+
+        }
+
+        public void Drive()
+        {
+            TimeSpan elapsedTime = DateTime.Now - globalStartTime;
+            Console.WriteLine("{0} is starting its route {1:N2} minutes after global start time {2}.",
+                        this.RouteNumber,
+                        elapsedTime.TotalMilliseconds,
+                        globalStartTime.ToShortTimeString());
+        }
+
+    }
     public class Bunny
     {
         public readonly string Name;
