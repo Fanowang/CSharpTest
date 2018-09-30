@@ -40,6 +40,18 @@ namespace CSharpTest
 
             Display(msft);
             Display(mansion);
+
+            Stack stack = new Stack();
+            stack.Push("sausage");
+            string s = (string)stack.Pop();   // Downcast, so explicit cast is needed
+
+            Console.WriteLine(s);             // sausage
+
+            Panda panda = new Panda { Name = "Bob" };
+            Console.WriteLine(panda.ToString());
+
+            Point point1 = new Point();
+            Point point2 = new Point(1, 3);
         }
 
         public static void Display(Asset asset)
@@ -48,6 +60,24 @@ namespace CSharpTest
         }
     }
 
+    public struct Point
+    {
+        int x, y;
+        public Point(int x, int y) { this.x = x; this.y = y; }
+    }
+    public class Panda
+    {
+        public string Name;
+        public override string ToString() => Name;
+    }
+    public class Stack
+    {
+        int Position;
+        object[] data = new object[10];
+        public void Push(object obj) { data[Position++] = obj; }
+        public object Pop() { return data[--Position]; }
+
+    }
     public class Asset
     {
         public string Name;
